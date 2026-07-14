@@ -2,8 +2,6 @@
 
 **AI-powered Intrusion Detection System** — supervised multi-class detection + unsupervised anomaly scoring, served through a FastAPI inference API and a live Streamlit operations dashboard.
 
-Built as a production-style portfolio project for graduate study in cybersecurity (software engineering + ML + threat detection).
-
 ## Features
 
 | Capability | Implementation |
