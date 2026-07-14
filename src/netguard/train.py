@@ -229,7 +229,7 @@ def run_training(settings: Settings | None = None) -> TrainResult:
     if not (processed_dir / "arrays.npz").exists():
         raise FileNotFoundError(
             f"Processed data not found in {processed_dir}. "
-            "Run scripts/preprocess.py first (Step 2)."
+            "Run scripts/preprocess.py (or setup.bat) first."
         )
 
     data = load_processed_bundle(processed_dir)
