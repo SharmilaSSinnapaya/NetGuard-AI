@@ -143,7 +143,7 @@ if ok_health and isinstance(health, dict):
 else:
     st.error(
         f"Cannot reach API at `{API_BASE}`. "
-        "Start it with `run_step4.bat` or "
+        "Start it with `start_api.bat` or "
         "`uvicorn api.main:app --host 127.0.0.1 --port 8000`, then refresh."
     )
     st.stop()
