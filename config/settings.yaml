@@ -1,0 +1,61 @@
+# NetGuard-AI runtime & training configuration
+# Edit values here; application code loads this file via config.settings
+
+project:
+  name: NetGuard-AI
+  version: 0.1.0
+  description: AI-powered Intrusion Detection System
+
+paths:
+  raw_data_dir: data/raw
+  processed_data_dir: data/processed
+  model_dir: models/artifacts
+  logs_dir: logs
+
+dataset:
+  name: nsl-kdd
+  # Common public mirror of the UNB NSL-KDD release (see scripts/download_data.py)
+  train_file: KDDTrain+.txt
+  test_file: KDDTest+.txt
+  # Attack categories mapped from fine-grained labels
+  target_column: attack_category
+  label_column: label
+  download_urls:
+    KDDTrain+.txt: https://raw.githubusercontent.com/defcom17/NSL_KDD/master/KDDTrain%2B.txt
+    KDDTest+.txt: https://raw.githubusercontent.com/defcom17/NSL_KDD/master/KDDTest%2B.txt
+
+features:
+  # Categorical columns that need encoding
+  categorical:
+    - protocol_type
+    - service
+    - flag
+  # Columns to drop before training (identifiers / leakage)
+  drop_columns:
+    - difficulty
+
+training:
+  random_state: 42
+  test_size: 0.2  # used only if we further split train for validation
+  supervised:
+    enabled: true
+    algorithm: random_forest  # random_forest | xgboost
+    n_estimators: 100
+    max_depth: null
+    class_weight: balanced
+  anomaly:
+    enabled: true
+    algorithm: isolation_forest
+    contamination: 0.1
+    n_estimators: 100
+
+api:
+  host: 0.0.0.0
+  port: 8000
+  model_name: supervised_ids.joblib
+  anomaly_model_name: anomaly_iforest.joblib
+
+dashboard:
+  api_base_url: http://127.0.0.1:8000
+  refresh_seconds: 2
+  title: NetGuard-AI Dashboard
